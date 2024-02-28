@@ -34,7 +34,19 @@ with requests.get(url) as response:
         cookies=re.split('SameSite=[a-z]+, ',cookies)
         for cookie in cookies:
             cookie=cookie.split(';')
-            print(f"This cookie's name is {cookie[0]}")
+            cookie[0]=cookie[0].split('=')
+            print(f"This cookie's name is {cookie[0][0]}")
+            if 'Expires' or 'expires' in cookie[2]:
+                cookie[2]=cookie[2].split('=')
+                print(f"This cookie expires at {cookie[2][1]}")
+            elif 'Expires' or 'expires' in cookie[1]: 
+                cookie[1]=cookie[1].split('=')
+                print(f"This cookie expires at {cookie[1][1]}")
+            elif 'Expires' or 'expires' in cookie[3]: 
+                cookie[3]=cookie[3].split('=')
+                print(f"This cookie expires at {cookie[3][1]}")
+            else : print('This cookie does not have an expiry date')
+            
         
     else:
         print('No cookie found')
