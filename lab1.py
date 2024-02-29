@@ -18,15 +18,10 @@ with requests.get(url) as response:
         print("no server found")
 
     
-    cookies = response.headers.get('Set-Cookie')
+    cookies = response.cookies
     if cookies:
-        cookies=re.split('SameSite=[a-z]+, ',cookies)
-        for cookie in cookies:
-            cookie=cookie.split(';')
-            cookie[0]=cookie[0].split('=')
-            print(f"This cookie's name is {cookie[0][0]}")
-            
-        
+       for cookie in cookies:
+            print(f"This cookie's name is {cookie.name}")
     else:
         print('No cookie found')
 
